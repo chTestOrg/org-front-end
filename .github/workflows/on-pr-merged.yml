@@ -1,0 +1,11 @@
+name: On PR merged
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  move-linked-issues:
+    if: github.event.pull_request.merged == true
+    uses: chTestORG/org-issues/.github/workflows/pr-merge-linked-issues-to-qa.yml@main
+    secrets: inherit
