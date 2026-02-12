@@ -1,0 +1,10 @@
+name: On PR merged
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  move-linked-issues:
+    uses: chTestORG/org-issues/.github/workflows/pr-open-check-branch-rules.yml@main
+    secrets: inherit
