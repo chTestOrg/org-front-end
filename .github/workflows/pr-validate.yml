@@ -13,13 +13,28 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const prNumber = context.payload.pull_request.number;
+
             const { data: pr } = await github.rest.pulls.get({
               owner,
               repo,
               pull_number: prNumber,
             });
+
             const body = pr.body || "";
 
-            if (!body.includes("Closes:")) {
-              throw new Error("PR must contain 'Closes:' section");
+            console.log("PR BODY:");
+            console.log(body);
+
+            // 🔹 Regex на всі ключові слова + optional org/repo
+            const issueRegex = /\b(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s*[:]?[\s]*([a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+#\d+|#\d+)/gi;
+
+            const matches = [...body.matchAll(issueRegex)];
+
+            if (matches.length === 0) {
+              throw new Error(
+                "❌ PR must reference at least one issue using close/fix/resolve keywords"
+              );
             }
+
+            console.log("✅ Found linked issues:");
+            matches.forEach(m => console.log(" -", m[1]));
