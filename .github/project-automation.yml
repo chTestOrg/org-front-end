@@ -1,0 +1,20 @@
+name: Project Automation
+on:
+  pull_request:
+    types: [ opened, edited, synchronize, closed ]
+
+jobs:
+  project-pr-opened:
+    if: github.event.action == 'opened'
+    uses: chTestORG/org-issues/.github/workflows/project-pr-opened.yml@main
+    secrets: inherit
+
+  project-pr-edited:
+    if: github.event.action == 'edited'
+    uses: chTestORG/org-issues/.github/workflows/project-pr-edited.yml@main
+    secrets: inherit
+
+  project-pr-merged:
+    if: github.event.pull_request.merged == true
+    uses: chTestORG/org-issues/.github/workflows/project-pr-merged.yml@main
+    secrets: inherit
