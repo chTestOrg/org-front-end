@@ -5,6 +5,9 @@ on:
 
 jobs:
   project-pr-automation:
-    if: github.event.sender.type != 'Bot'
+    if: >
+      github.event.sender.type != 'Bot' && 
+      github.event.sender.login != 'org-issues-manager[bot]' &&
+      github.actor != 'org-issues-manager[bot]'
     uses: chTestORG/org-issues/.github/workflows/project-workflows.yml@main
     secrets: inherit
