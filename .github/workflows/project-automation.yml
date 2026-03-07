@@ -3,6 +3,10 @@ on:
   pull_request:
     types: [ opened, edited, synchronize, closed ]
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   project-pr-automation:
     uses: chTestORG/org-issues/.github/workflows/project-workflows.yml@develop
