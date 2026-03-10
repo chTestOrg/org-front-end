@@ -9,5 +9,6 @@ permissions:
 
 jobs:
   project-pr-automation:
+    if: github.event.sender.type != 'Bot'
     uses: chTestORG/org-issues/.github/workflows/project-workflows.yml@develop
     secrets: inherit
